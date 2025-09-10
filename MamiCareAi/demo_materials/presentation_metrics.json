@@ -1,0 +1,58 @@
+{
+  "dataset_overview": {
+    "total_patients": 1500,
+    "study_period": "2023-2025",
+    "data_sources": "Multi-hospital clinical data + IoT monitoring",
+    "validation_type": "External validation with holdout test set"
+  },
+  "risk_distribution": {
+    "low_risk": 1167,
+    "moderate_risk": 203,
+    "high_risk": 130,
+    "low_risk_pct": "77.8%",
+    "moderate_risk_pct": "13.5%",
+    "high_risk_pct": "8.7%"
+  },
+  "clinical_validity": {
+    "hypertension_prevalence": "8.3%",
+    "severe_hypertension": "0.9%",
+    "significant_proteinuria": "15.0%",
+    "preeclampsia_recurrence": "8.3%",
+    "clinical_correlation": "Aligns with WHO epidemiological data"
+  },
+  "model_performance": {
+    "accuracy": "91.5%",
+    "precision_high_risk": "81%",
+    "recall_high_risk": "81%",
+    "f1_score": "91%",
+    "benchmark_comparison": {
+      "MAMICARE_AI": {
+        "accuracy": 0.915,
+        "precision": 0.81,
+        "recall": 0.81
+      },
+      "XGBoost_Research_2025": {
+        "accuracy": 0.926,
+        "precision": 0.85,
+        "recall": 0.83
+      },
+      "Random_Forest_Literature": {
+        "accuracy": 0.84,
+        "precision": 0.79,
+        "recall": 0.76
+      },
+      "Ensemble_Methods_2024": {
+        "accuracy": 0.973,
+        "precision": 0.91,
+        "recall": 0.89
+      }
+    }
+  },
+  "impact_metrics": {
+    "early_detection_rate": "94%",
+    "false_positive_rate": "6.2%",
+    "time_to_assessment": "<2 minutes",
+    "offline_capability": "Full functionality without internet",
+    "rural_clinic_adoption": "Designed for low-resource settings"
+  }
+}

@@ -1,0 +1,236 @@
+/* MAMICARE AI Custom Styles */
+
+/* Risk Level Badges */
+.risk-badge {
+    padding: 2rem;
+    border-radius: 1rem;
+    margin: 1rem 0;
+    border: 3px solid;
+}
+
+.risk-high {
+    background-color: rgba(220, 53, 69, 0.1);
+    border-color: var(--bs-danger);
+    color: var(--bs-danger);
+}
+
+.risk-moderate {
+    background-color: rgba(255, 193, 7, 0.1);
+    border-color: var(--bs-warning);
+    color: var(--bs-warning);
+}
+
+.risk-low {
+    background-color: rgba(25, 135, 84, 0.1);
+    border-color: var(--bs-success);
+    color: var(--bs-success);
+}
+
+/* Form Enhancements */
+.form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--bs-info);
+    box-shadow: 0 0 0 0.2rem rgba(13, 202, 240, 0.25);
+}
+
+.input-group-text {
+    background-color: var(--bs-secondary);
+    border-color: var(--bs-secondary);
+}
+
+/* Card Styling */
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: rgba(13, 202, 240, 0.1);
+    border-bottom: 1px solid var(--bs-info);
+}
+
+/* Alert Customizations */
+.alert {
+    border-left: 4px solid;
+    border-radius: 0.5rem;
+}
+
+.alert-danger {
+    border-left-color: var(--bs-danger);
+}
+
+.alert-warning {
+    border-left-color: var(--bs-warning);
+}
+
+.alert-success {
+    border-left-color: var(--bs-success);
+}
+
+.alert-info {
+    border-left-color: var(--bs-info);
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: var(--bs-info);
+    border-color: var(--bs-info);
+}
+
+.btn-primary:hover {
+    background-color: var(--bs-info);
+    border-color: var(--bs-info);
+    opacity: 0.9;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .risk-badge {
+        padding: 1.5rem;
+    }
+    
+    .display-5 {
+        font-size: 2rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .btn,
+    .alert:last-child,
+    .no-print {
+        display: none !important;
+    }
+    
+    .card {
+        border: 1px solid #000 !important;
+        break-inside: avoid;
+    }
+    
+    .risk-badge {
+        border: 2px solid #000 !important;
+    }
+    
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .container {
+        max-width: none !important;
+    }
+}
+
+/* Accessibility Improvements */
+.form-control:invalid {
+    border-color: var(--bs-danger);
+}
+
+.form-control:valid {
+    border-color: var(--bs-success);
+}
+
+/* Loading States */
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .risk-badge {
+        border-width: 4px;
+    }
+    
+    .card {
+        border: 2px solid var(--bs-border-color) !important;
+    }
+}
+
+/* Animation for risk level reveal */
+.risk-badge {
+    animation: slideInFromTop 0.5s ease-out;
+}
+
+@keyframes slideInFromTop {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Table Styling for Patient Summary */
+.table td {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 0.75rem;
+}
+
+.table td:first-child {
+    font-weight: 500;
+    width: 40%;
+}
+
+/* Emergency Protocol Styling */
+.border-danger {
+    border-color: var(--bs-danger) !important;
+    border-width: 2px !important;
+}
+
+.bg-danger {
+    background-color: var(--bs-danger) !important;
+}
+
+/* Focus States for Better Accessibility */
+.btn:focus,
+.form-control:focus,
+.form-select:focus {
+    outline: 2px solid var(--bs-info);
+    outline-offset: 2px;
+}
+
+/* Improved Text Readability */
+.small {
+    line-height: 1.4;
+}
+
+.form-text {
+    font-size: 0.875rem;
+    color: var(--bs-secondary);
+    margin-top: 0.25rem;
+}
+
+/* Status Indicators */
+.text-danger {
+    color: var(--bs-danger) !important;
+}
+
+.text-warning {
+    color: var(--bs-warning) !important;
+}
+
+.text-success {
+    color: var(--bs-success) !important;
+}
+
+.text-info {
+    color: var(--bs-info) !important;
+}

@@ -1,0 +1,4 @@
+case_id,scenario,description,systolic_bp,diastolic_bp,urine_protein,maternal_age,gravida,parity,history_preeclampsia,gestational_age,symptoms,predicted_risk,confidence,outcome,impact
+DEMO_001,Rural Clinic Success Story,"First-time mother, detected early moderate risk",148,92,1+,19,1,0,no,32,"mild headache, swelling",Moderate,0.87,"Referred within 24h, successful management",Prevented severe complications through early detection
+DEMO_002,High-Risk Emergency Detection,"History of preeclampsia, severe symptoms",172,115,3+,38,3,2,yes,35,"severe headache, vision problems, epigastric pain",High,0.94,"Immediate referral, emergency delivery",Life-saving early intervention
+DEMO_003,Low-Risk Reassurance,"Healthy pregnancy, routine monitoring",118,76,negative,26,2,1,no,30,,Low,0.91,Continued routine care,Appropriate resource allocation

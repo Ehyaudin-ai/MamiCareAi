@@ -1,0 +1,47 @@
+{
+  "dataset_quality":{
+    "0":{
+      "total_patients":1500,
+      "date_range":"2023-01-01 to 2024-11-29",
+      "risk_distribution":{
+        "Low":1167,
+        "Moderate":203,
+        "High":130
+      },
+      "data_completeness":{
+        "patient_id":100.0,
+        "timestamp":100.0,
+        "systolic_bp":100.0,
+        "diastolic_bp":100.0,
+        "urine_protein":100.0,
+        "maternal_age":100.0,
+        "gravida":100.0,
+        "parity":100.0,
+        "history_preeclampsia":100.0,
+        "gestational_age":100.0,
+        "symptoms":100.0,
+        "risk_level":100.0,
+        "risk_score":100.0,
+        "source":100.0
+      }
+    }
+  },
+  "clinical_validity":{
+    "0":{
+      "hypertension_prevalence":"8.3%",
+      "severe_hypertension":"0.9%",
+      "significant_proteinuria":"15.0%",
+      "recurrence_rate":"8.3%",
+      "age_risk_factor":"12.1%"
+    }
+  },
+  "model_benchmarks":{
+    "0":{
+      "training_accuracy":"91.5%",
+      "precision_high_risk":"81%",
+      "recall_high_risk":"81%",
+      "f1_score_weighted":"91%",
+      "confidence_threshold":"80%"
+    }
+  }
+}

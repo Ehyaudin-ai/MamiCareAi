@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Records - MAMICARE AI</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Header -->
+        <div class="text-center mb-4">
+            <h1 class="display-5 fw-bold text-info">
+                <i class="fas fa-heartbeat me-2"></i>MAMICARE AI
+            </h1>
+            <p class="lead text-muted">Case Records</p>
+        </div>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else 'info' }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="row">
+            <div class="col-12">
+                <!-- Navigation -->
+                <div class="mb-3">
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>New Assessment
+                    </a>
+                </div>
+
+                <!-- Cases Table -->
+                {% if cases %}
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="fas fa-file-medical me-2"></i>Patient Assessment Records
+                        </h4>
+                        <p class="small text-muted mb-0">Total cases: {{ cases|length }}</p>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Date/Time</th>
+                                        <th>Age</th>
+                                        <th>GA</th>
+                                        <th>BP</th>
+                                        <th>Protein</th>
+                                        <th>History PE</th>
+                                        <th>Risk Level</th>
+                                        <th>Confidence</th>
+                                        <th>Symptoms</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for case in cases %}
+                                    <tr>
+                                        <td class="small">
+                                            {{ case.timestamp.split('T')[0] if 'T' in case.timestamp else case.timestamp.split(' ')[0] }}<br>
+                                            <span class="text-muted">{{ case.timestamp.split('T')[1][:8] if 'T' in case.timestamp else case.timestamp.split(' ')[1][:8] if ' ' in case.timestamp else '' }}</span>
+                                        </td>
+                                        <td>{{ case.maternal_age }}y</td>
+                                        <td>{{ case.gestational_age }}w</td>
+                                        <td>{{ case.systolic_bp }}/{{ case.diastolic_bp }}</td>
+                                        <td>{{ case.urine_protein }}</td>
+                                        <td>{{ case.history_preeclampsia|title }}</td>
+                                        <td>
+                                            <span class="badge {% if case.predicted_risk == 'High' %}bg-danger{% elif case.predicted_risk == 'Moderate' %}bg-warning{% else %}bg-success{% endif %}">
+                                                {{ case.predicted_risk }}
+                                            </span>
+                                        </td>
+                                        <td>{{ (case.confidence * 100)|round(1) }}%</td>
+                                        <td class="small">
+                                            {{ case.symptoms[:30] + '...' if case.symptoms and case.symptoms|length > 30 else case.symptoms or 'None' }}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Statistics -->
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title text-success">
+                                    <i class="fas fa-check-circle"></i> Low Risk
+                                </h5>
+                                <h3>{{ cases|selectattr("predicted_risk", "equalto", "Low")|list|length }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title text-warning">
+                                    <i class="fas fa-exclamation-circle"></i> Moderate Risk
+                                </h5>
+                                <h3>{{ cases|selectattr("predicted_risk", "equalto", "Moderate")|list|length }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title text-danger">
+                                    <i class="fas fa-exclamation-triangle"></i> High Risk
+                                </h5>
+                                <h3>{{ cases|selectattr("predicted_risk", "equalto", "High")|list|length }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% else %}
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-file-medical fa-3x text-muted mb-3"></i>
+                        <h4>No Cases Found</h4>
+                        <p class="text-muted">No patient assessments have been recorded yet.</p>
+                        <a href="{{ url_for('index') }}" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Perform First Assessment
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Export Options -->
+                {% if cases %}
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <i class="fas fa-download me-2"></i>Export Options
+                        </h6>
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button onclick="exportToCSV()" class="btn btn-outline-info">
+                                <i class="fas fa-file-csv me-2"></i>Export as CSV
+                            </button>
+                            <button onclick="window.print()" class="btn btn-outline-info">
+                                <i class="fas fa-print me-2"></i>Print Records
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function exportToCSV() {
+            // Create CSV content
+            const cases = {{ cases|tojson if cases else '[]' }};
+            
+            if (cases.length === 0) {
+                alert('No cases to export');
+                return;
+            }
+            
+            // CSV headers
+            const headers = [
+                'timestamp', 'maternal_age', 'gestational_age', 'systolic_bp', 
+                'diastolic_bp', 'urine_protein', 'history_preeclampsia', 
+                'gravida', 'parity', 'symptoms', 'predicted_risk', 'confidence'
+            ];
+            
+            // Create CSV content
+            let csvContent = headers.join(',') + '\n';
+            
+            cases.forEach(case => {
+                const row = headers.map(header => {
+                    let value = case[header] || '';
+                    // Escape quotes and wrap in quotes if contains comma
+                    if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+                        value = '"' + value.replace(/"/g, '""') + '"';
+                    }
+                    return value;
+                });
+                csvContent += row.join(',') + '\n';
+            });
+            
+            // Download CSV
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'mamicare_cases_' + new Date().toISOString().slice(0,10) + '.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // Print styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @media print {
+                .btn, .no-print { display: none !important; }
+                .card { border: 1px solid #000 !important; break-inside: avoid; }
+                body { -webkit-print-color-adjust: exact; }
+                .table { font-size: 12px; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+study,model_accuracy,sample_size,validation_type,key_features
+BMC_Medical_Informatics_2025,0.926,2847,external,"['MAP', 'PlGF', 'PAPP-A', 'maternal_age']"
+Nature_Digital_Medicine_2022,0.84,108557,temporal,"['pregnancy_trajectory', 'EHR_data']"
+Cell_Bioscience_2023,0.973,144,cross_validation,"['biomarkers', 'clinical_data']"

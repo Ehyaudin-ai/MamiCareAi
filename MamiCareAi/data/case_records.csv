@@ -1,0 +1,2 @@
+timestamp,systolic_bp,diastolic_bp,urine_protein,maternal_age,gravida,parity,history_preeclampsia,gestational_age,symptoms,predicted_risk,confidence
+2025-08-09T05:31:44.512784,95.0,80.0,negative,29,3,2,yes,36,Headache,High,0.814

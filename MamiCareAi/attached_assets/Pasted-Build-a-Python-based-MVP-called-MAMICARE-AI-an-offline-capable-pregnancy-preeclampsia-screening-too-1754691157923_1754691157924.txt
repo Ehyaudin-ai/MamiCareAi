@@ -1,0 +1,77 @@
+Build a Python-based MVP called MAMICARE AI: an offline-capable pregnancy preeclampsia screening tool for rural, low-infrastructure clinics.
+
+Requirements:
+
+Focus
+
+Detect preeclampsia risk (Low / Moderate / High) using simple inputs.
+
+Inputs (form fields)
+
+1. Systolic BP (mmHg)
+
+2. Diastolic BP (mmHg)
+
+3. Urine protein level (negative/trace/1+/2+/3+)
+
+4. Maternal age (years)
+
+5. Gravida (number of pregnancies)
+
+6. Parity (number of prior deliveries)
+
+7. History of preeclampsia (yes/no)
+
+8. Gestational age (weeks)
+
+9. Symptoms (comma-separated: headache, vision problems, swelling, epigastric pain, decreased fetal movement)
+
+AI model
+
+1. Create or synthesize a small dataset if needed.
+
+2. Train a lightweight classifier (logistic regression or decision tree) to predict risk category.
+
+3. Save trained model as a local file (pickle or joblib).
+
+4. Ensure the model can run offline on low-resource hardware.
+
+Web app (Flask)
+
+1. One page with a simple HTML form to enter the inputs.
+
+2. One results page showing: • Predicted risk (Low/Moderate/High) • Short recommendation text (examples below) • If history of preeclampsia -> recommend low-dose aspirin in the recommendations
+
+3. Button to save each case to a local CSV (timestamped).
+
+Recommendations logic (example)
+
+High risk: “High risk — urgent referral needed coupled with loading magnesium sulfate (MgSo4). Call or transfer to nearest facility.”
+
+Moderate risk: “Moderate risk — contact health worker and schedule assessment within 24 hours.”
+
+Low risk: “Low risk — continue routine care and next appointment on [date].”
+
+If history_of_preeclampsia == yes: append “Recommend low-dose aspirin per protocol; confirm with clinician.”
+
+Extras & constraints
+
+Minimal dependencies: Flask, pandas, scikit-learn, joblib (or pickle), optionally numpy.
+
+Provide a script train.py that creates/generates dataset, trains model, and saves model file.
+
+Provide app.py (Flask), model.py (helper inference), templates/ (form.html, result.html).
+
+Keep UI extremely simple, mobile-friendly, and text-first (no heavy JS).
+
+Include a sample mock dataset (CSV) and example saved results CSV.
+
+Deliverables & README
+
+Provide README with local run steps: • pip install -r requirements.txt • python train.py # generates dataset and saves model • python app.py # runs Flask app on localhost
+
+Comment code thoroughly for fast hackathon handover.
+
+Keep project lightweight and demo-ready (no cloud).
+
+Finish by generating all files with working code so I can run the app immediately in Replit.

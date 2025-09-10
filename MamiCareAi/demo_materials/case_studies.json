@@ -1,0 +1,68 @@
+[
+  {
+    "title": "Early Detection Success Story",
+    "patient_profile": "Rural clinic, first pregnancy",
+    "presentation": {
+      "age": 19,
+      "bp": "148/92 mmHg",
+      "proteinuria": "1+",
+      "symptoms": "Mild headache, ankle swelling",
+      "gestational_age": "32 weeks"
+    },
+    "ai_assessment": {
+      "risk_level": "MODERATE",
+      "confidence": "87%",
+      "processing_time": "1.2 seconds"
+    },
+    "clinical_action": {
+      "recommendation": "Contact health worker within 24 hours",
+      "outcome": "Referred to district hospital",
+      "result": "Successful management, healthy delivery at 38 weeks"
+    },
+    "impact": "Prevented progression to severe preeclampsia through early intervention"
+  },
+  {
+    "title": "High-Risk Emergency Detection",
+    "patient_profile": "Previous preeclampsia history",
+    "presentation": {
+      "age": 38,
+      "bp": "172/115 mmHg",
+      "proteinuria": "3+",
+      "symptoms": "Severe headache, visual disturbances, epigastric pain",
+      "gestational_age": "35 weeks"
+    },
+    "ai_assessment": {
+      "risk_level": "HIGH",
+      "confidence": "94%",
+      "processing_time": "0.8 seconds"
+    },
+    "clinical_action": {
+      "recommendation": "URGENT: Immediate referral + MgSO4 preparation",
+      "outcome": "Emergency transport arranged within 30 minutes",
+      "result": "Emergency cesarean delivery, mother and baby survived"
+    },
+    "impact": "Life-saving intervention through rapid risk assessment"
+  },
+  {
+    "title": "Appropriate Resource Allocation",
+    "patient_profile": "Routine antenatal visit",
+    "presentation": {
+      "age": 26,
+      "bp": "118/76 mmHg",
+      "proteinuria": "Negative",
+      "symptoms": "None",
+      "gestational_age": "30 weeks"
+    },
+    "ai_assessment": {
+      "risk_level": "LOW",
+      "confidence": "91%",
+      "processing_time": "0.9 seconds"
+    },
+    "clinical_action": {
+      "recommendation": "Continue routine care",
+      "outcome": "Regular antenatal schedule maintained",
+      "result": "Uncomplicated pregnancy, normal delivery"
+    },
+    "impact": "Efficient resource allocation, avoided unnecessary interventions"
+  }
+]

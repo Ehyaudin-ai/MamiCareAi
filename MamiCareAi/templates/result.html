@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Assessment Results - MAMICARE AI</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Header -->
+        <div class="text-center mb-4">
+            <h1 class="display-5 fw-bold text-info">
+                <i class="fas fa-heartbeat me-2"></i>MAMICARE AI
+            </h1>
+            <p class="lead text-muted">Risk Assessment Results</p>
+            <p class="small text-muted">{{ timestamp }}</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                
+                <!-- Risk Level Display -->
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <h2 class="mb-3">Preeclampsia Risk Assessment</h2>
+                        
+                        {% if risk_level == 'High' %}
+                            <div class="risk-badge risk-high mb-3">
+                                <i class="fas fa-exclamation-triangle fa-2x"></i>
+                                <h3 class="mt-2">HIGH RISK</h3>
+                            </div>
+                        {% elif risk_level == 'Moderate' %}
+                            <div class="risk-badge risk-moderate mb-3">
+                                <i class="fas fa-exclamation-circle fa-2x"></i>
+                                <h3 class="mt-2">MODERATE RISK</h3>
+                            </div>
+                        {% else %}
+                            <div class="risk-badge risk-low mb-3">
+                                <i class="fas fa-check-circle fa-2x"></i>
+                                <h3 class="mt-2">LOW RISK</h3>
+                            </div>
+                        {% endif %}
+                        
+                        <p class="lead">Confidence: {{ (confidence * 100)|round(1) }}%</p>
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="fas fa-clipboard-list me-2"></i>Clinical Recommendations
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        {% for recommendation in recommendations %}
+                            <div class="alert {% if loop.first %}{{ 'alert-danger' if risk_level == 'High' else 'alert-warning' if risk_level == 'Moderate' else 'alert-success' }}{% else %}alert-info{% endif %}" role="alert">
+                                <i class="fas fa-{{ 'ambulance' if 'urgent' in recommendation else 'user-md' if 'health worker' in recommendation else 'calendar-check' if 'appointment' in recommendation else 'pills' }} me-2"></i>
+                                {{ recommendation }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Patient Summary -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="fas fa-user me-2"></i>Patient Summary
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Blood Pressure:</strong></td>
+                                        <td>{{ patient_data.systolic_bp }}/{{ patient_data.diastolic_bp }} mmHg</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Urine Protein:</strong></td>
+                                        <td>{{ patient_data.urine_protein }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Maternal Age:</strong></td>
+                                        <td>{{ patient_data.maternal_age }} years</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Gestational Age:</strong></td>
+                                        <td>{{ patient_data.gestational_age }} weeks</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Gravida:</strong></td>
+                                        <td>{{ patient_data.gravida }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Parity:</strong></td>
+                                        <td>{{ patient_data.parity }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>History of Preeclampsia:</strong></td>
+                                        <td>{{ patient_data.history_preeclampsia|title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Symptoms:</strong></td>
+                                        <td>{{ patient_data.symptoms if patient_data.symptoms else "None reported" }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Protocols (if high risk) -->
+                {% if risk_level == 'High' %}
+                <div class="card mb-4 border-danger">
+                    <div class="card-header bg-danger text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-exclamation-triangle me-2"></i>URGENT: Emergency Protocol
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-danger">Immediate Actions:</h6>
+                                <ul>
+                                    <li>Prepare magnesium sulfate (MgSO₄) loading dose</li>
+                                    <li>Contact receiving facility immediately</li>
+                                    <li>Monitor vital signs every 15 minutes</li>
+                                    <li>Prepare for emergency transport</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-danger">Transport Preparation:</h6>
+                                <ul>
+                                    <li>IV access established</li>
+                                    <li>Left lateral positioning</li>
+                                    <li>Oxygen available if needed</li>
+                                    <li>Medical records ready</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Action Buttons -->
+                <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>New Assessment
+                    </a>
+                    
+                    <div>
+                        <button onclick="window.print()" class="btn btn-outline-info me-2">
+                            <i class="fas fa-print me-2"></i>Print Results
+                        </button>
+                        <button onclick="downloadCase()" class="btn btn-info">
+                            <i class="fas fa-download me-2"></i>Save Case
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Case Saved Confirmation -->
+                <div class="alert alert-success mt-3" role="alert">
+                    <i class="fas fa-check me-2"></i>
+                    This case has been automatically saved to the local database with timestamp: {{ timestamp }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function downloadCase() {
+            const caseData = {
+                timestamp: '{{ timestamp }}',
+                patient: {{ patient_data|tojson }},
+                risk_level: '{{ risk_level }}',
+                confidence: {{ confidence }},
+                recommendations: {{ recommendations|tojson }}
+            };
+            
+            const dataStr = JSON.stringify(caseData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'mamicare_case_' + new Date().toISOString().slice(0,19).replace(/:/g, '-') + '.json';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // Print-specific styling
+        function setupPrintStyles() {
+            const style = document.createElement('style');
+            style.textContent = `
+                @media print {
+                    .btn, .alert:last-child { display: none !important; }
+                    .card { border: 1px solid #000 !important; }
+                    .risk-badge { border: 2px solid #000 !important; }
+                    body { -webkit-print-color-adjust: exact; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        setupPrintStyles();
+    </script>
+</body>
+</html>
